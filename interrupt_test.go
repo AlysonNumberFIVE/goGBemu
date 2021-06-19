@@ -1,5 +1,4 @@
 
-
 package main
 
 import (
@@ -70,4 +69,27 @@ func TestIESwitchFunction(t *testing.T) {
 	}
 	fmt.Println(testCPU.memory[testCPU.iFlags.IF])	
 }
+
+// TestInterrupt tests the functionality of interrupt.
+func TestInterrupt(t *testing.T) {
+	testCPU := createContext()
+
+	testCPU.iFlags.IME = 1
+	 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

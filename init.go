@@ -40,6 +40,13 @@ func createContext() *cpuContext {
 	iFlags.IF = 0xff0f 
 	iFlags.IE = 0xffff
 
+	iFlags.iAddresses = make(map[uint]uint16)
+	iFlags.iAddresses[1] = 0x0040
+	iFlags.iAddresses[2] = 0x0048
+	iFlags.iAddresses[3] = 0x0050
+	iFlags.iAddresses[4] = 0x0058
+	iFlags.iAddresses[5] = 0x0060
+
 	return &cpuContext{
 		a: 0,
 		f: 0,
@@ -49,12 +56,12 @@ func createContext() *cpuContext {
 		e: 0,
 		h: 0,
 		l: 0,
-		sp: 0,
+		sp: 0xff80,
 		pc: 0,
-		memory: make([]uint8, 0xffff),
+		memory: make([]uint8, 0xffff + 1),
 		portModeReg: portModeReg,
 		lcdReg: lcdReg,
-
+		iFlags: iFlags,
 	}
 }
 

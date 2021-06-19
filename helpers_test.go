@@ -75,12 +75,3 @@ func TestCheckBit(t *testing.T) {
 	}
 
 }
-
-
-
-
-
-
-
-
-

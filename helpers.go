@@ -5,7 +5,6 @@ import (
 	"fmt"
 )
 
-
 // check if a bit is set.
 func checkBit(n uint8, pos uint) uint8 {
 	return n & (1 << (pos - 1)) 

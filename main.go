@@ -20,9 +20,10 @@ const terminalNegativeEdge uint = 4
 
 // interrupt flag locations.
 type interruptFlags struct {
-	IF 		uint16 // 0xff0f
-	IE 		uint16 // 0xffff
-	IME 	uint16 // ??? - seemingsly has no address and is a 1 or 0.
+	IF 				uint16 // 0xff0f
+	IE 				uint16 // 0xffff
+	IME 			uint16 // ??? - seemingsly has no address and is a 1 or 0.
+	iAddresses		map[uint]uint16
 }
 
 // LCD display registers.
@@ -133,11 +134,6 @@ type cpuContext struct {
 	lcdReg 			_LCDDisplayRegs
 	iFlags 			interruptFlags
 
-}
-
-func (cpu * cpuContext)stackPush() {
-	cpu.memory[cpu.sp] = cpu.memory[cpu.pc]
-	cpu.sp++ 
 }
 
 func (cpu * cpuContext) readMemory(location uint16) uint8 {

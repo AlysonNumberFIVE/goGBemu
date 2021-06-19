@@ -1,6 +1,9 @@
 
 package main
 
+import (
+	"fmt"
+)
 
 func (cpu *cpuContext)verifyIFSwitch(position int) {
 }
@@ -23,29 +26,35 @@ func (cpu *cpuContext)_IESwitchFunction(bitVal int, position uint) {
 	}
 }
 
-func (cpu *cpuContext)interrupt(sigNum int) {
-	cpu._IFSwitchFunction(1, sigNum)
-
-	if cpu.iFlags.IME == 1 && checkBit(cpu.iFlags.IE, sigNum) {
-		cpu.stackPush()
-	}
+// runInterrupt runs the specified interrupt.
+func (cpu *cpuContext)runInterrupt(sigNum uint) {
+	if cpu.iFlags.IME == 1 {
+		cpu.iFlags.IME = 0						// Disable
+		cpu._IFSwitchFunction(0, sigNum)		// Acknowledge
+		cpu.stackPushPC()						// push
+		cpu.pusha()					
+		cpu.pc = cpu.iFlags.iAddresses[sigNum]	
+		
+		// run interrupt.
+		cpu.popa()
+		cpu.stackPopPC()
+		cpu.iFlags.IME = 1
+	}	
 }
 
+// go back to page 27 to complete fucntion.
+func (cpu *cpuContext)interrupt() bool {
+	// keep an eye on info on the IE register.
+	var interruptChecker uint = 0
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	for interruptChecker < 5 {
+		if checkBit(cpu.memory[cpu.iFlags.IF], interruptChecker) != 0 && checkBit(cpu.memory[cpu.iFlags.IE], interruptChecker) != 0 {
+			fmt.Println("Run interrupt")
+			return true
+		}
+		interruptChecker++
+	}
+	return false
+}
 
 
