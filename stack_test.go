@@ -86,19 +86,3 @@ func TestPusha(t *testing.T) {
 		t.Errorf("reg l != 3, l == %d", testCPU.l)
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

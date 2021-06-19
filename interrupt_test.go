@@ -31,6 +31,7 @@ func TestIFSwitchFunction(t *testing.T) {
 		t.Errorf("memory value doesn't equal 13 (0000 1101)")
 	}
 
+
 	testCPU._IFSwitchFunction(0, serialIOTransferCompletion)
 	if testCPU.memory[testCPU.iFlags.IF] != 5 {
 		t.Errorf("memory value doesn't equal 5 (0000 0101")
@@ -75,7 +76,32 @@ func TestInterrupt(t *testing.T) {
 	testCPU := createContext()
 
 	testCPU.iFlags.IME = 1
-	 
+	testCPU.memory[testCPU.iFlags.IF] = 0xa
+	testCPU.memory[testCPU.iFlags.IE] = 0x2
+	ret, bit := testCPU.interrupt()
+	if ret != true || bit != 2 {
+		t.Errorf("1. interrupt not handled correctly.")
+		fmt.Println("ret : ", ret)
+		fmt.Println("bit : ", bit)
+	}
+
+	if testCPU.memory[testCPU.iFlags.IF] != 0x8 {
+		t.Errorf("Bit not switched properly")
+	}
+
+	testCPU.memory[testCPU.iFlags.IE] = 0xe
+	testCPU.memory[testCPU.iFlags.IF] = 0x6
+	ret, bit = testCPU.interrupt()
+	if ret != true || bit != 2 {
+		t.Errorf("2. Interrput not handled correctly.")
+		fmt.Println("ret : ", ret)
+		fmt.Println("bit : ", bit)
+	}
+	if testCPU.memory[testCPU.iFlags.IF] != 0x4 {
+		t.Errorf("Bit not switched properly")
+	}
+//	testCPU.memory[testCPU.iFlags.IF]
+//	ret, bit = testCPU.
 }
 
 

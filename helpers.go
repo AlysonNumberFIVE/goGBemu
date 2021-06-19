@@ -7,7 +7,7 @@ import (
 
 // check if a bit is set.
 func checkBit(n uint8, pos uint) uint8 {
-	return n & (1 << (pos - 1)) 
+	return n & (1 << pos - 1) 
 }
  
 // clearBit clears a single bit from a value at the

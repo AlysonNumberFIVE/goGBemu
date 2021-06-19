@@ -2,7 +2,7 @@
 package main
 
 import (
-
+	"fmt"
 	"testing"
 )
 
@@ -58,6 +58,13 @@ func TestCheckBit(t *testing.T) {
 	var number uint8
 	var arg uint
 
+	number =  1
+	arg = 0
+	fmt.Println("inside Test ", checkBit(number, arg))
+
+	if checkBit(number, arg) != 0 {
+		t.Errorf("cehck bit is incorrect (0001)")
+	}
 	number = 9
 	arg = 0
 	if checkBit(number, arg) != 0 {
